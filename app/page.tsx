@@ -100,22 +100,13 @@ export default function HomePage() {
         <section className="px-4">
           <div className="mx-auto max-w-6xl">
             <div className="relative aspect-[5/3] overflow-hidden rounded-3xl bg-slate-100">
-              {heroSlides[currentSlide].type === "image" ? (
-                <Image
-                  src={heroSlides[currentSlide].src! || "/placeholder.svg"}
-                  alt={heroSlides[currentSlide].alt!}
-                  fill
-                  className="object-cover"
-                  priority
-                />
-              ) : (
-                <div className="flex h-full items-center justify-center text-center">
-                  <div>
-                    <h2 className="mb-3 text-3xl font-bold md:text-4xl">{heroSlides[currentSlide].title}</h2>
-                    <p className="text-slate-600">{heroSlides[currentSlide].description}</p>
-                  </div>
-                </div>
-              )}
+              <Image
+                src={heroSlides[currentSlide].src || "/placeholder.svg"}
+                alt={heroSlides[currentSlide].alt}
+                fill
+                className="object-cover"
+                priority
+              />
             </div>
 
             <div className="mt-4 flex items-center justify-center gap-4">
