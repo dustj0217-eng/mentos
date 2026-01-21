@@ -23,6 +23,33 @@ const eventList = [
     status: "ongoing",
     endDate: "2026.01.31",
     prize: "스타벅스 아메리카노",
+  },
+  {
+    id: 'student-concerns',
+    title: "대학생 고민 상담",
+    subtitle: "고민을 나누고 함께 해결해요",
+    image: "/images/004.png", // 이미지 추가 필요
+    status: "ongoing",
+    endDate: "2026.12.31",
+    prize: "무료 멘토링",
+  },
+  {
+    id: 'contest-review',
+    title: "공모전 후기 공유",
+    subtitle: "경험을 나누고 포인트 받자",
+    image: "/images/005.png", // 이미지 추가 필요
+    status: "ongoing",
+    endDate: "2026.12.31",
+    prize: "3,000P",
+  },
+  {
+    id: 'career-survey',
+    title: "진로 설문조사",
+    subtitle: "설문 참여하고 상품권 받자",
+    image: "/images/006.png", // 이미지 추가 필요
+    status: "ongoing",
+    endDate: "2026.03.31",
+    prize: "1만원 상품권 추첨",
   }
 ]
 

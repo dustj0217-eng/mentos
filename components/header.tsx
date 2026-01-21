@@ -9,7 +9,7 @@ const navLinks = [
   { title: "공모전", href: "/contests" },
   { title: "대외활동", href: "/activities" },
   { title: "멘토링", href: "/mentoring" },
-  { title: "취업 콘텐츠", href: "/career" },
+  { title: "이벤트", href: "/events" },
 ]
 
 export function Header() {
