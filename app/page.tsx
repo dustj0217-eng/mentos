@@ -43,7 +43,7 @@ const categories = [
   { title: "공모전", href: "/contests", icon: Megaphone },
   { title: "대외활동", href: "/activities", icon: Users },
   { title: "멘토링", href: "/mentoring", icon: GraduationCap },
-  { title: "취업 콘텐츠", href: "/career", icon: Briefcase },
+  { title: "취업", href: "/career", icon: Briefcase },
 ]
 
 const trendingContents = posts.slice(0, 3)
@@ -161,7 +161,7 @@ export default function HomePage() {
                     <div className="flex items-center justify-center rounded-full bg-slate-50 hover:bg-slate-100 p-2">
                       <Icon className="h-6 w-6 text-slate-700" />
                     </div>
-                    <span className="text-center text-[13px] font-medium text-slate-800">
+                    <span className="text-center text-[11px] font-medium text-slate-800">
                       {cat.title}
                     </span>
                   </Link>
