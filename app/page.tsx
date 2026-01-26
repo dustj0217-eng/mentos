@@ -17,6 +17,7 @@ import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { Megaphone, Users, GraduationCap, Briefcase } from "lucide-react"
 import { posts } from "@/lib/posts"
+import { hotPosts } from "@/lib/community"
 
 /* =====================
    Mock Data (임시)
@@ -72,45 +73,6 @@ export default function HomePage() {
     setCurrentSlide((prev) => (prev === totalSlides - 1 ? 0 : prev + 1))
   }
 
-    const hotPosts = [
-    {
-      id: 1,
-      category: '자유게시판',
-      title: '컴공 앞으로 어떻게 먹고살아야함?',
-      badge: 'N',
-      comments: 12,
-      likes: 45
-    },
-    {
-      id: 2,
-      category: '비밀게시판',
-      title: '5만원 이하 수능보는 동생 선물 추천해주세요',
-      comments: 23,
-      likes: 31
-    },
-    {
-      id: 3,
-      category: '졸업생게시판',
-      title: '회계사되면',
-      comments: 8,
-      likes: 19
-    },
-    {
-      id: 4,
-      category: '새내기게시판',
-      title: '동아리 모집기간은 언제까지예요? 다음주에...',
-      comments: 15,
-      likes: 27
-    },
-    {
-      id: 5,
-      category: '장터게시판',
-      title: '커피 기프티콘 팝니다',
-      comments: 5,
-      likes: 12
-    }
-  ];
-
   return (
     <div className="min-h-screen bg-white">
       {/* ================= Header ================= */}
@@ -148,7 +110,7 @@ export default function HomePage() {
         
         {/* ================= Categories ================= */}
         <section className="px-4 py-3 md:hidden">
-          <div className="mx-auto max-w-6xl px-10">
+          <div className="mx-auto max-w-6xl px-6">
             <div className="grid grid-cols-4 gap-1">
               {categories.map((cat) => {
                 const Icon = cat.icon
@@ -200,27 +162,31 @@ export default function HomePage() {
           </div>
         </section>
 
+        {/* ================= Hot Posts (커뮤니티 미리보기) ================= */}
         <section className="px-4 py-16 bg-slate-50">
           <div className="mx-auto max-w-6xl">
             {/* 헤더 */}
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-xl font-bold text-slate-900">즐겨찾는 게시판</h2>
-              <button className="flex items-center gap-1 text-sm text-slate-600 hover:text-slate-900">
+              {/* 더보기 버튼 - 커뮤니티 페이지로 이동 */}
+              <Link href="/community" className="flex items-center gap-1 text-sm text-slate-600 hover:text-slate-900">
                 더 보기
                 <ChevronRight className="h-4 w-4" />
-              </button>
+              </Link>
             </div>
 
-            {/* 게시글 목록 */}
+            {/* 게시글 목록 - 최대 3개만 표시 */}
             <div className="space-y-2">
-              {hotPosts.map((post) => (
-                <a
+              {hotPosts.slice(0, 3).map((post) => (
+                <Link
                   key={post.id}
-                  href="#"
+                  href={`/community/${post.id}`}
                   className="block bg-white rounded-lg p-4 hover:bg-slate-50 transition-colors"
                 >
                   <div className="flex items-start justify-between gap-3">
+                    {/* 게시글 내용 */}
                     <div className="flex-1 min-w-0">
+                      {/* 뱃지 영역 (NEW, HOT 등) */}
                       <div className="flex items-center gap-2 mb-1">
                         {post.badge && (
                           <span className="flex items-center justify-center bg-red-500 text-white text-[10px] font-bold rounded w-4 h-4">
@@ -228,24 +194,27 @@ export default function HomePage() {
                           </span>
                         )}
                       </div>
+                      {/* 게시글 제목 */}
                       <p className="text-sm font-medium text-slate-900 truncate">
                         {post.title}
                       </p>
                     </div>
                     
-                    {/* 댓글/좋아요 */}
+                    {/* 통계 (댓글/좋아요) */}
                     <div className="flex items-center gap-3 text-xs text-slate-500 shrink-0">
+                      {/* 댓글 수 */}
                       <div className="flex items-center gap-1">
                         <MessageCircle className="h-3.5 w-3.5" />
                         <span>{post.comments}</span>
                       </div>
+                      {/* 좋아요 수 */}
                       <div className="flex items-center gap-1">
                         <Heart className="h-3.5 w-3.5" />
                         <span>{post.likes}</span>
                       </div>
                     </div>
                   </div>
-                </a>
+                </Link>
               ))}
             </div>
           </div>
