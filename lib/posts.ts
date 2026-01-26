@@ -17,7 +17,7 @@ export const posts: Post[] = [
     author: "멘토스 에디터",
     date: "2026.01.15",
     category: "공모전",
-    image: "/contest-awards-trophy.jpg",
+    image: "/images/contests.png",
     content: `
       <p>올해 상반기는 ESG, 디지털 전환, 지속가능성을 주제로 한 공모전이 대거 열립니다.</p>
       
@@ -49,7 +49,7 @@ export const posts: Post[] = [
     author: "김멘토",
     date: "2026.01.12",
     category: "대외활동",
-    image: "/writing-resume-document.jpg",
+    image: "/images/coverletter.png",
     content: `
       <p>대외활동 자소서는 취업 자소서와 다릅니다. 열정과 참여 의지를 보여주는 것이 핵심입니다.</p>
       
@@ -78,7 +78,7 @@ export const posts: Post[] = [
     author: "이커리어",
     date: "2026.01.08",
     category: "취업",
-    image: "/job-interview-business-meeting.jpg",
+    image: "/images/internship.png",
     content: `
       <p>인턴십 면접은 신입 공채보다 덜 까다롭지만, 그만큼 실무 적합성을 중점적으로 평가합니다.</p>
       
