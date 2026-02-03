@@ -13,11 +13,13 @@ import Image from "next/image"
 import Link from "next/link"
 import { ChevronLeft, ChevronRight, MessageCircle, Heart } from "lucide-react"
 import { Button } from "@/components/ui/button"
+
 import { Header } from "@/components/header"
+import { CommunityPreviewSection } from "../components/community-preview-section"
 import { Footer } from "@/components/footer"
+
 import { Megaphone, Users, GraduationCap, Briefcase } from "lucide-react"
 import { posts } from "@/lib/posts"
-import { hotPosts } from "@/lib/community"
 
 /* =====================
    Mock Data (임시)
@@ -162,63 +164,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* ================= Hot Posts (커뮤니티 미리보기) ================= */}
-        <section className="px-4 py-16 bg-slate-50">
-          <div className="mx-auto max-w-6xl">
-            {/* 헤더 */}
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="text-xl font-bold text-slate-900">즐겨찾는 게시판</h2>
-              {/* 더보기 버튼 - 커뮤니티 페이지로 이동 */}
-              <Link href="/community" className="flex items-center gap-1 text-sm text-slate-600 hover:text-slate-900">
-                더 보기
-                <ChevronRight className="h-4 w-4" />
-              </Link>
-            </div>
-
-            {/* 게시글 목록 - 최대 3개만 표시 */}
-            <div className="space-y-2">
-              {hotPosts.slice(0, 3).map((post) => (
-                <Link
-                  key={post.id}
-                  href={`/community/${post.id}`}
-                  className="block bg-white rounded-lg p-4 hover:bg-slate-50 transition-colors"
-                >
-                  <div className="flex items-start justify-between gap-3">
-                    {/* 게시글 내용 */}
-                    <div className="flex-1 min-w-0">
-                      {/* 뱃지 영역 (NEW, HOT 등) */}
-                      <div className="flex items-center gap-2 mb-1">
-                        {post.badge && (
-                          <span className="flex items-center justify-center bg-red-500 text-white text-[10px] font-bold rounded w-4 h-4">
-                            {post.badge}
-                          </span>
-                        )}
-                      </div>
-                      {/* 게시글 제목 */}
-                      <p className="text-sm font-medium text-slate-900 truncate">
-                        {post.title}
-                      </p>
-                    </div>
-                    
-                    {/* 통계 (댓글/좋아요) */}
-                    <div className="flex items-center gap-3 text-xs text-slate-500 shrink-0">
-                      {/* 댓글 수 */}
-                      <div className="flex items-center gap-1">
-                        <MessageCircle className="h-3.5 w-3.5" />
-                        <span>{post.comments}</span>
-                      </div>
-                      {/* 좋아요 수 */}
-                      <div className="flex items-center gap-1">
-                        <Heart className="h-3.5 w-3.5" />
-                        <span>{post.likes}</span>
-                      </div>
-                    </div>
-                  </div>
-                </Link>
-              ))}
-            </div>
-          </div>
-        </section>
+        <CommunityPreviewSection />
       </main>
 
       {/* ================= Footer ================= */}
