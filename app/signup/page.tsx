@@ -1,11 +1,8 @@
 "use client"
 
 /**
- * SignupPage (Mock Authentication)
- * 목적:
- * - 실제 서비스처럼 보이는 회원가입 UI
- * - 아직 로그인/회원가입 미구현 상태를 자연스럽게 처리
- * - form submit 시 안내 팝업(Dialog) 노출
+ * SignupPage
+ * - Firebase Auth (Email/Password) 실제 회원가입
  */
 
 import { useState } from "react"
@@ -23,8 +20,16 @@ import {
   DialogDescription,
 } from "@/components/ui/dialog"
 
+// Firebase
+import { createUserWithEmailAndPassword } from "firebase/auth"
+import { auth } from "@/lib/firebase"
+
 export default function SignupPage() {
   const [open, setOpen] = useState(false)
+
+  // 🔑 회원가입 입력값
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
 
   return (
     <div className="min-h-screen bg-white">
@@ -44,9 +49,21 @@ export default function SignupPage() {
             {/* Signup Form */}
             <form
               className="space-y-4"
-              onSubmit={(e) => {
+              onSubmit={async (e) => {
                 e.preventDefault()
-                setOpen(true)
+
+                try {
+                  await createUserWithEmailAndPassword(
+                    auth,
+                    email,
+                    password
+                  )
+
+                  // ✅ 성공 시 안내 팝업
+                  setOpen(true)
+                } catch (error: any) {
+                  alert(error.message)
+                }
               }}
             >
               <div className="space-y-2">
@@ -56,12 +73,26 @@ export default function SignupPage() {
 
               <div className="space-y-2">
                 <Label htmlFor="email">이메일</Label>
-                <Input id="email" type="email" placeholder="example@email.com" />
+                <Input
+                  id="email"
+                  type="email"
+                  placeholder="example@email.com"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                />
               </div>
 
               <div className="space-y-2">
                 <Label htmlFor="password">비밀번호</Label>
-                <Input id="password" type="password" placeholder="8자 이상 입력" />
+                <Input
+                  id="password"
+                  type="password"
+                  placeholder="8자 이상 입력"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
               </div>
 
               <div className="space-y-2">
@@ -76,7 +107,7 @@ export default function SignupPage() {
               {/* Agreements */}
               <div className="space-y-2 text-sm">
                 <label className="flex items-start gap-2">
-                  <input type="checkbox" className="mt-1 rounded" />
+                  <input type="checkbox" className="mt-1 rounded" required />
                   <span className="text-slate-600">
                     <Link href="/terms" className="underline">
                       이용약관
@@ -117,15 +148,15 @@ export default function SignupPage() {
 
       <Footer />
 
-      {/* 안내 팝업 */}
+      {/* 성공 팝업 */}
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>현재는 시범 운영 중입니다</DialogTitle>
+            <DialogTitle>회원가입 완료</DialogTitle>
             <DialogDescription className="mt-2 text-left">
-              멘토스는 현재 서비스 안정화를 위한 테스트 단계로, 로그인 및 회원가입 기능은 순차적으로 오픈될 예정입니다.
+              회원가입이 정상적으로 완료되었습니다.
               <br />
-              조금만 기다려 주세요.
+              이제 로그인하실 수 있습니다.
             </DialogDescription>
           </DialogHeader>
 
