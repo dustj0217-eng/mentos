@@ -12,7 +12,6 @@ import {
   MessageCircle, 
   Eye, 
   Trash2,
-  MoreVertical 
 } from "lucide-react"
 import {
   doc,
@@ -64,10 +63,25 @@ export default function PostDetailPage() {
   const [loading, setLoading] = useState(true)
   const [commentText, setCommentText] = useState("")
   const [submittingComment, setSubmittingComment] = useState(false)
+  
+  // ✅ 댓글도 익명이 기본
+  const [isAnonymous, setIsAnonymous] = useState(true)
+  const [userNickname, setUserNickname] = useState("")
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       setUser(currentUser)
+      
+      if (currentUser) {
+        try {
+          const userDoc = await getDoc(doc(db, "users", currentUser.uid))
+          if (userDoc.exists()) {
+            setUserNickname(userDoc.data().nickname || "사용자")
+          }
+        } catch (error) {
+          console.error("닉네임 로드 실패:", error)
+        }
+      }
     })
     return () => unsubscribe()
   }, [])
@@ -143,7 +157,6 @@ export default function PostDetailPage() {
 
     try {
       if (isLiked) {
-        // 좋아요 취소
         await updateDoc(docRef, {
           likes: increment(-1),
           likedBy: arrayRemove(user.uid),
@@ -154,7 +167,6 @@ export default function PostDetailPage() {
           likedBy: post.likedBy.filter((id) => id !== user.uid),
         })
       } else {
-        // 좋아요
         await updateDoc(docRef, {
           likes: increment(1),
           likedBy: arrayUnion(user.uid),
@@ -186,26 +198,24 @@ export default function PostDetailPage() {
     setSubmittingComment(true)
 
     try {
-      // 사용자 닉네임 가져오기
-      const userDoc = await getDoc(doc(db, "users", user.uid))
-      const nickname = userDoc.exists() ? userDoc.data().nickname : "익명"
+      // ✅ 익명/실명 선택
+      const authorName = isAnonymous ? "익명" : userNickname
 
-      // 댓글 추가
       const commentsRef = collection(db, "posts", postId, "comments")
       await addDoc(commentsRef, {
         content: commentText.trim(),
-        author: nickname,
+        author: authorName,
         authorId: user.uid,
         createdAt: serverTimestamp(),
       })
 
-      // 게시글 댓글 수 증가
       const docRef = doc(db, "posts", postId)
       await updateDoc(docRef, {
         commentCount: increment(1),
       })
 
       setCommentText("")
+      setIsAnonymous(true) // ✅ 댓글 작성 후 다시 익명으로 리셋
       loadComments()
 
       if (post) {
@@ -367,6 +377,30 @@ export default function PostDetailPage() {
 
             {/* 댓글 작성 */}
             <div className="mb-6">
+              {user && (
+                <div className="flex items-center gap-4 mb-3 text-sm">
+                  <span className="text-slate-600">댓글 작성자:</span>
+                  <label className="flex items-center gap-2 cursor-pointer">
+                    <input
+                      type="radio"
+                      checked={isAnonymous}
+                      onChange={() => setIsAnonymous(true)}
+                      className="cursor-pointer"
+                    />
+                    <span className="font-medium">익명</span>
+                  </label>
+                  <label className="flex items-center gap-2 cursor-pointer">
+                    <input
+                      type="radio"
+                      checked={!isAnonymous}
+                      onChange={() => setIsAnonymous(false)}
+                      className="cursor-pointer"
+                    />
+                    <span className="font-medium">{userNickname}</span>
+                  </label>
+                </div>
+              )}
+              
               <Textarea
                 value={commentText}
                 onChange={(e) => setCommentText(e.target.value)}
@@ -430,8 +464,6 @@ export default function PostDetailPage() {
           </div>
         </div>
       </main>
-
-      <Footer />
     </div>
   )
 }

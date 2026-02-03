@@ -16,12 +16,13 @@ import { onAuthStateChanged } from "firebase/auth"
 export default function WritePage() {
   const router = useRouter()
   const [user, setUser] = useState<any>(null)
-  const [nickname, setNickname] = useState("")
   const [loading, setLoading] = useState(true)
   const [submitting, setSubmitting] = useState(false)
 
   const [title, setTitle] = useState("")
   const [content, setContent] = useState("")
+  const [isAnonymous, setIsAnonymous] = useState(true) // ✅ 익명이 기본
+  const [userNickname, setUserNickname] = useState("") // 실제 닉네임 저장용
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
@@ -33,15 +34,16 @@ export default function WritePage() {
 
       setUser(currentUser)
 
-      // 닉네임 가져오기
       try {
         const userDoc = await getDoc(doc(db, "users", currentUser.uid))
         if (userDoc.exists()) {
-          setNickname(userDoc.data().nickname || "익명")
+          setUserNickname(userDoc.data().nickname || "사용자")
+        } else {
+          setUserNickname("사용자")
         }
       } catch (error) {
         console.error("닉네임 로드 실패:", error)
-        setNickname("익명")
+        setUserNickname("사용자")
       } finally {
         setLoading(false)
       }
@@ -69,7 +71,7 @@ export default function WritePage() {
       const docRef = await addDoc(collection(db, "posts"), {
         title: title.trim(),
         content: content.trim(),
-        author: nickname || "익명",
+        author: isAnonymous ? "익명" : userNickname, // ✅ 익명/실명 선택
         authorId: user.uid,
         createdAt: serverTimestamp(),
         likes: 0,
@@ -118,9 +120,27 @@ export default function WritePage() {
           {/* 작성 폼 */}
           <form onSubmit={handleSubmit} className="bg-white rounded-lg p-6 shadow-sm">
             <div className="space-y-6">
-              {/* 작성자 표시 */}
-              <div className="text-sm text-slate-600">
-                작성자: <span className="font-medium text-slate-900">{nickname}</span>
+              {/* 익명/실명 선택 */}
+              <div className="flex items-center gap-4 p-3 bg-slate-50 rounded-lg">
+                <span className="text-sm text-slate-600">작성자:</span>
+                <label className="flex items-center gap-2 cursor-pointer">
+                  <input
+                    type="radio"
+                    checked={isAnonymous}
+                    onChange={() => setIsAnonymous(true)}
+                    className="cursor-pointer"
+                  />
+                  <span className="text-sm font-medium">익명</span>
+                </label>
+                <label className="flex items-center gap-2 cursor-pointer">
+                  <input
+                    type="radio"
+                    checked={!isAnonymous}
+                    onChange={() => setIsAnonymous(false)}
+                    className="cursor-pointer"
+                  />
+                  <span className="text-sm font-medium">{userNickname}</span>
+                </label>
               </div>
 
               {/* 제목 */}
@@ -178,8 +198,6 @@ export default function WritePage() {
           </form>
         </div>
       </main>
-
-      <Footer />
     </div>
   )
 }
