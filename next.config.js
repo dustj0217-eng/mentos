@@ -5,6 +5,11 @@ const withPWA = require('next-pwa')({
   skipWaiting: true,
 });
 
+module.exports = withPWA({
+  reactStrictMode: true,
+  turbopack: false, // ⭐ 핵심
+});
+
 const nextConfig = {
   reactStrictMode: true,
 };
