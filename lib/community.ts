@@ -16,7 +16,7 @@ export interface Post {
 export const hotPosts: Post[] = [
   {
     id: 1,
-    title: '중도 알에서 빨간색 지갑 분실하신분?',
+    title: '지갑 브랜드 추천좀',
     badge: 'N',
     comments: 12,
     likes: 45,

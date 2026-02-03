@@ -1,29 +1,20 @@
 import Link from "next/link"
-import { Mail, Phone, MapPin, Instagram, Youtube } from "lucide-react"
+import { Mail, Instagram, Youtube } from "lucide-react"
 
 const footerLinks = {
-  서비스: [
-    { title: "공모전", href: "/contests" },
-    { title: "대외활동", href: "/activities" },
-    { title: "멘토링", href: "/mentoring" },
-    { title: "취업 콘텐츠", href: "/career" },
-  ],
   고객지원: [
     { title: "공지사항", href: "/notice" },
     { title: "자주 묻는 질문", href: "/faq" },
     { title: "1:1 문의", href: "/contact" },
-    { title: "제휴 문의", href: "/partnership" },
-  ],
-  회사: [
-    { title: "회사 소개", href: "/about" },
-    { title: "채용", href: "/careers" },
-    { title: "블로그", href: "/blog" },
-  ],
+  ]
 }
 
 const socialLinks = [
-  { icon: Instagram, href: "https://instagram.com", label: "Instagram" },
-  { icon: Youtube, href: "https://youtube.com", label: "Youtube" },
+  {
+    icon: Instagram,
+    href: "https://www.instagram.com/mtors_official?igsh=MWdyazM1YTZyZHFqNQ==",
+    label: "Instagram",
+  },
 ]
 
 export function Footer() {
@@ -31,7 +22,7 @@ export function Footer() {
     <footer className="border-t bg-slate-50">
       {/* Main Footer */}
       <div className="mx-auto max-w-6xl px-4 py-12">
-        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-5">
+        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
           {/* Brand & Contact */}
           <div className="lg:col-span-2">
             <Link href="/" className="text-xl font-bold">
@@ -46,15 +37,7 @@ export function Footer() {
             <div className="mt-6 space-y-3">
               <div className="flex items-center gap-3 text-sm text-slate-600">
                 <Mail className="h-4 w-4" />
-                <span>contact@mentos.kr</span>
-              </div>
-              <div className="flex items-center gap-3 text-sm text-slate-600">
-                <Phone className="h-4 w-4" />
-                <span>02-1234-5678</span>
-              </div>
-              <div className="flex items-center gap-3 text-sm text-slate-600">
-                <MapPin className="h-4 w-4" />
-                <span>서울특별시 강남구 테헤란로 123</span>
+                <span>mentoseu05@gmail.com</span>
               </div>
             </div>
 
@@ -82,7 +65,10 @@ export function Footer() {
               <ul className="space-y-3">
                 {links.map((link) => (
                   <li key={link.href}>
-                    <Link href={link.href} className="text-sm text-slate-600 hover:text-slate-900">
+                    <Link
+                      href={link.href}
+                      className="text-sm text-slate-600 hover:text-slate-900"
+                    >
                       {link.title}
                     </Link>
                   </li>
