@@ -9,6 +9,7 @@ const _geistMono = Geist_Mono({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
   title: "멘토스 - 당신을 위한 콘텐츠 큐레이션",
+  manifest: "/manifest.json",
   description: "발견하는 즐거움, 멘토스에서 특별한 콘텐츠를 만나보세요",
   generator: "next.js",
   icons: {
