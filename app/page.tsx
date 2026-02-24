@@ -11,7 +11,7 @@
 import { useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
-import { ChevronLeft, ChevronRight, MessageCircle, Heart } from "lucide-react"
+import { ChevronLeft, ChevronRight, MessageCircle, Heart, MessageCircleQuestionMark, Balloon, ChartNoAxesColumn, ChartNoAxesGantt } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
 import { Header } from "@/components/header"
@@ -20,10 +20,6 @@ import { Footer } from "@/components/footer"
 
 import { Megaphone, Users, GraduationCap, Briefcase } from "lucide-react"
 import { posts } from "@/lib/posts"
-
-/* =====================
-   Mock Data (임시)
-   ===================== */
 
 const heroSlides = [
   {
@@ -43,10 +39,10 @@ const heroSlides = [
 ]
 
 const categories = [
-  { title: "공모전", href: "/contests", icon: Megaphone },
-  { title: "대외활동", href: "/activities", icon: Users },
-  { title: "멘토링", href: "/mentoring", icon: GraduationCap },
-  { title: "취업", href: "/career", icon: Briefcase },
+  { title: "Q&A", href: "/qna", icon: MessageCircleQuestionMark },
+  { title: "커뮤니티", href: "/community", icon: Users },
+  { title: "이벤트", href: "/events", icon: Balloon },
+  { title: "더보기", href: "/", icon: ChartNoAxesGantt },
 ]
 
 const trendingContents = posts.slice(0, 3)
@@ -165,6 +161,25 @@ export default function HomePage() {
         </section>
 
         <CommunityPreviewSection />
+
+        {/* ================= Career Test CTA ================= */}
+        <section className="px-4 py-10">
+          <div className="mx-auto max-w-6xl">
+            <Link href="/career-test/start" className="block">
+              <div className="mx-auto max-w-2xl text-center">
+                <h3 className="mb-3 text-2xl font-bold md:text-3xl">
+                  나에게 맞는 직업 찾기
+                </h3>
+                <p className="mb-6 text-slate-600">
+                  3분 테스트로 커리어 유형 분석
+                </p>
+                <Button size="lg" className="px-8">
+                  무료 진단 시작
+                </Button>
+              </div>
+            </Link>
+          </div>
+        </section>
       </main>
 
       {/* ================= Footer ================= */}
