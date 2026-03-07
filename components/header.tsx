@@ -8,8 +8,8 @@ import { onAuthStateChanged, signOut } from "firebase/auth"
 import { auth } from "@/lib/firebase"
 
 const navLinks = [
-  { title: "Q&A", href: "/qna" },
-  { title: "커뮤니티", href: "/community" },
+  { title: "우수 멘토", href: "/top-mentors" },
+  { title: "멘토링 후기", href: "/reviews" },
   { title: "이벤트", href: "/events" },
 ]
 

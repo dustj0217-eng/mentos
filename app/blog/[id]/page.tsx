@@ -3,8 +3,9 @@ import { notFound } from "next/navigation"
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 
-export default function BlogDetailPage({ params }: { params: { id: string } }) {
-  const post = posts.find((p) => p.id === Number(params.id))
+export default async function BlogDetailPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params
+  const post = posts.find((p) => p.id === Number(id))
 
   if (!post) return notFound()
 

@@ -39,21 +39,13 @@ const heroSlides = [
 ]
 
 const categories = [
-  { title: "Q&A", href: "/qna", icon: MessageCircleQuestionMark },
-  { title: "커뮤니티", href: "/community", icon: Users },
+  { title: "우수 멘토", href: "/top-mentors", icon: MessageCircleQuestionMark },
+  { title: "멘토링 후기", href: "/reviews", icon: Users },
   { title: "이벤트", href: "/events", icon: Balloon },
   { title: "더보기", href: "/", icon: ChartNoAxesGantt },
 ]
 
 const trendingContents = posts.slice(0, 3)
-
-const posters = [
-  { id: 1, title: "2026 대학생 마케팅 공모전", href: "/contests/1" },
-  { id: 2, title: "청년 창업 아이디어 공모전", href: "/contests/2" },
-  { id: 3, title: "UX/UI 디자인 챌린지", href: "/contests/3" },
-  { id: 4, title: "콘텐츠 기획 공모전", href: "/contests/4" },
-]
-
 
 /* =====================
    Page Component
@@ -159,8 +151,6 @@ export default function HomePage() {
             </div>
           </div>
         </section>
-
-        <CommunityPreviewSection />
 
         {/* ================= Career Test CTA ================= */}
         <section className="px-4 py-10">
